@@ -28,7 +28,32 @@ let falling = false
 // }, 0);
 const Physics = (entities, { touches, time, dispatch, events }) => {
     let engine = entities.physics.engine
+    engine.positionIterations = 30
+    engine.velocityIterations = 30 
     Matter.Engine.update(engine, time.delta)
+    
+
+    //     Matter.Events.on(engine, 'beforeUpdate', function() {
+    //     var gravity = engine.gravity;
+    //     let body = entities.Circle.body
+    //     if (true) {
+    //         Matter.Body.applyForce(body, body.position, {
+    //             x: -gravity.x * gravity.scale * body.mass,
+    //             y: -gravity.y * gravity.scale * body.mass
+    //         });
+    //     }
+    // });
+
+    // if ((Matter.Collision.collides(entities.Bullet.body, entities[`Circle`].body) != null)) {
+    //     falling = true
+    // }
+    
+    if (falling) {
+        entities.Circle.body.force.y = 0.1 / 200;
+        Matter.Body.setSpeed(entities.Circle.body, 1)
+    }
+    
+    // entities.Circle.body.force.x = 0.1 / 200;
 
     touches.filter(t => t.type === "move" || t.type === "press")
         .forEach(t => {
@@ -82,7 +107,7 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
     if (ballMove) {
         balls.unshift({ x: entities.Bullet.body.position.x, y: entities.Bullet.body.position.y })
         if (!deactivate) {
-        Matter.Body.setSpeed(entities.Bullet.body, 5)
+        // Matter.Body.setSpeed(entities.Bullet.body, 25)
         }
         if (balls.length > 13) {
             balls.pop()
@@ -119,6 +144,7 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
             dispatch({ type: 'WallHit' })
         }
     }
+
     for (let i = 1; i < 11; i++) {
             if (ballMove && balls.length > 12) {
                 Matter.Body.setPosition(entities[`Ball${i}`].body, balls[i - 1])
@@ -129,10 +155,11 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
                 Matter.Body.setPosition(entities[`Ball${i}`].body, { x: -30, y: -19 })
             }
     }
-    for ( let j = 1; j < 4; j++) {
-            Matter.Body.setSpeed(entities.Bullet.body, 10)
-            // Matter.Body.setPosition(entities[`Bullet${bulletCount}`].body, { x: 100, y: 300 })
-    }
+
+    // for ( let j = 1; j < 4; j++) {
+    //         // Matter.Body.setSpeed(entities.Bullet.body, 10)
+    //         // Matter.Body.setPosition(entities[`Bullet${bulletCount}`].body, { x: 100, y: 300 })
+    // }
 
     Matter.Body.setSpeed(entities[`Bullet`].body, 10)
 
@@ -210,10 +237,6 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
         .forEach(key =>  {
             if (key.includes('Bomb') ) {
     if (Matter.Collision.collides(entities.Bomb.body, entities.Bullet.body) != null) {
-
-        
-
-            
         explosion = 0
         let body = Matter.Bodies.circle(
             entities.Bomb.body.position.x,
@@ -246,7 +269,6 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
             }
         }
     }
-
 
         // boomHit = true
     }

@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 // import { useEffect, useState } from 'react';
 import { GameEngine } from 'react-native-game-engine';
 import entities from './entities';
@@ -20,13 +20,13 @@ import {
 
 function App(): React.JSX.Element {
 
-  // const [engine, setEngine] = useState(null)
-
+  const [engine, setEngine] = useState(null)
+  
   return (
     <>
     <View style={{ flex: 1}}>
       <GameEngine
-        // ref={(ref) => setEngine(ref)}
+      //  ref={(ref) => { setEngine(ref) }}
         systems={[Physics]}
         entities={entities()}
         // onEvent={(e) => {
@@ -42,12 +42,22 @@ function App(): React.JSX.Element {
       >
         <StatusBar hidden={true} />
       </GameEngine>
+
+      <View style={{
+        
+      }}>
+
+      </View>
     </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  levelSection: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
