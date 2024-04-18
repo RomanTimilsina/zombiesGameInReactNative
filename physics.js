@@ -1,5 +1,6 @@
 import Matter from "matter-js";
 import { zombieHit } from "./Components/Zombie";
+import { Box } from "./Components/Box";
 // import { Box } from "./Components/Box";
 const getAngle = (pointerX, pointerY, objectX, objectY) => {
     let angle = Math.atan2((pointerX - objectX), (pointerY - objectY)) * (180 / Math.PI) * -1 + 90;
@@ -14,9 +15,12 @@ export let ballPos = { x: 100, y: 320 }
 export let bulletPos = { x: 100, y: 320 }
 let runOnce = true
 export let bulletCount = 1
+export let explosion = 1
 let count = 1
 let balls = []
 let deactivate = false
+let zombieCount = 0
+let falling = false
 // let now = Date.now();
 // setInterval(() => {
 //     Matter.Engine.update(engine, Date.now() - now);
@@ -105,11 +109,11 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
     if (Matter.Collision.collides(entities.Bullet.body, entities.MidFloor.body) != null) {
         if (count == 10) {
             // for ( let j = 1; j < 6; j++) {
-            Matter.Body.setSpeed(entities.Bullet.body, 0)
-            Matter.Body.setPosition(entities.Bullet.body, { x: 100, y: 300 })
+            // Matter.Body.setSpeed(entities.Bullet.body, 0)
+            // Matter.Body.setPosition(entities.Bullet.body, { x: 100, y: 300 })
             // }
-            ballMove = false
-            count = 1
+            // ballMove = false
+            // count = 1
         } else {
             count++
             dispatch({ type: 'WallHit' })
@@ -129,49 +133,124 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
             Matter.Body.setSpeed(entities.Bullet.body, 10)
             // Matter.Body.setPosition(entities[`Bullet${bulletCount}`].body, { x: 100, y: 300 })
     }
+
+    Matter.Body.setSpeed(entities[`Bullet`].body, 10)
+
+    Object.keys(entities)
+    .filter(key => entities[key].body)
+    .forEach(key =>  {
+        if (key.includes('Circle') ) {
+            if (Matter.Collision.collides(entities.Bullet.body, entities.Circle.body) != null) {
+            falling = true
+        }}
+        // if (falling) {
+        //     Matter.Body.applyForce(entities.Circle.body, {
+        //         x: -1,
+        //         y: 2
+        //     },3)
+        // }
+    })
+
     for (let i = 1; i <= 4; i++) {
-        if (Matter.Collision.collides(entities.Bullet.body, entities[`Zombie${i}`].body) != null) {
-            if (!zombieHit.includes(i)) {
-                dispatch({ type: "ZombieHit" })
-                zombieHit.push(i)
+        
+        
+
+        Object.keys(entities)
+		.filter(key => entities[key].body)
+        .forEach(key =>  {
+            if (key.includes('Zombie') && key.includes(i )) {
+                if (i <= 5) {
+                    console.log(key)
+                }
+                
+                if (zombieCount < i) {
+                    zombieCount++
+                }
+                
+                if (Matter.Collision.collides(entities.Bullet.body, entities[`Zombie${i}`].body) != null) {
+                    if (!zombieHit.includes(i)) {
+                        zombieHit.push(i)
+                        switch (i) {
+                            case 1:
+                                dispatch({ type: '1' })
+                                break
+                            case 2:
+                                dispatch({ type: '2' })
+                                break
+                            case 3:
+                                dispatch({ type: '3' })
+                                break
+                            case 4:
+                                dispatch({ type: '4' })
+                                break
+                        }
+                    }
+                    console.log('zombie:',zombieCount,zombieHit.length)
+                    if (zombieHit.length === zombieCount) {
+                        zombieCount = 0
+                        dispatch({type: '5'})
+                        
+                        // if (zombieCount == 3) {
+                        //     dispatch({type: '6'})
+                        // } else {
+                            
+                        // }
+                      
+                        // zombieHit = []
+                        
+                    }
+                }
+            }
+        }
+            )
+    }
+
+    Object.keys(entities)
+		.filter(key => entities[key].body)
+        .forEach(key =>  {
+            if (key.includes('Bomb') ) {
+    if (Matter.Collision.collides(entities.Bomb.body, entities.Bullet.body) != null) {
+
+        
+
+            
+        explosion = 0
+        let body = Matter.Bodies.circle(
+            entities.Bomb.body.position.x,
+            entities.Bomb.body.position.y,
+            200,
+            { frictionAir: 0.021,
+            }
+        );
+        body.collisionFilter = {
+            'group': -1,
+            'category': 2,
+            'mask': 0,
+        };
+        Matter.World.add(engine.world, [body]);
+        bombId++
+        entities[bombId] = {
+            body: body,
+            size: [200, 200],
+            renderer: Box
+        };
+        zombieHit.push(5)
+        zombieHit.push(6)
+    for (let i = 1; i <= 4; i++) {
+        if (entities[bombId].body ) {
+            if (Matter.Collision.collides(entities[bombId].body, entities[`Zombie${i}`].body) != null) {
+                if (!zombieHit.includes(i)) {
+                    dispatch({ type: "ZombieHit" })
+                    zombieHit.push(i)
+                }
             }
         }
     }
-    // if (Matter.Collision.collides(entities.Bomb.body, entities.Bullet.body) != null) {
-    //     let body = Matter.Bodies.circle(
-    //         entities.Bomb.body.position.x,
-    //         entities.Bomb.body.position.y,
-    //         200,
-    //         { frictionAir: 0.021,
-    //         }
-    //     );
-    //     body.collisionFilter = {
-    //         'group': -1,
-    //         'category': 2,
-    //         'mask': 0,
-    //     };
-    //     Matter.World.add(engine.world, [body]);
-    //     bombId++
-    //     entities[bombId] = {
-    //         body: body,
-    //         size: [200, 200],
-    //         color: "pink" ,
-    //         renderer: Box
-    //     };
-    //     zombieHit.push(5)
-    //     zombieHit.push(6)
-    // for (let i = 1; i <= 4; i++) {
-    //     if (entities[bombId].body ) {
-    //         if (Matter.Collision.collides(entities[bombId].body, entities[`Zombie${i}`].body) != null) {
-    //             if (!zombieHit.includes(i)) {
-    //                 dispatch({ type: "ZombieHit" })
-    //                 zombieHit.push(i)
-    //             }
-    //         }
-    //     }
-    // }
-    //     // boomHit = true
-    // }
+
+
+        // boomHit = true
+    }
+}})
 return entities;
 }
 export default Physics

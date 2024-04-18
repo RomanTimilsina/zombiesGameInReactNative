@@ -3,7 +3,7 @@ import { View, Image, Dimensions } from "react-native"
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 let i = 0
-const Wall = props => {
+const MidFloor = props => {
     const widthBody = props.body.bounds.max.x - props.body.bounds.min.x
     const heightBody = props.body.bounds.max.y - props.body.bounds.min.y
     const xBody = props.body.position.x - widthBody / 2
@@ -31,8 +31,8 @@ const Wall = props => {
             <Image
                 key={i}
                 
-                style={{ width: !isWall ? 20 : 50, height: !isWall ? 20 : 50 }}
-                source={require('../assets/wall.jpg')}
+                style={{ width: 20, height: 20 }}
+                // source={require('../assets/wall.jpg')}
             />
         );
     }
@@ -51,8 +51,8 @@ const Wall = props => {
         </View>
     )
 }
-export default (world, color, pos, size, isVertical, isWall = true, wallId) => {
-    const initialWall = Matter.Bodies.rectangle(
+export default (world, color, pos, size, isVertical, wallId) => {
+    const initialMidFloor = Matter.Bodies.rectangle(
         pos.x,
         pos.y,
         size.width,
@@ -62,14 +62,13 @@ export default (world, color, pos, size, isVertical, isWall = true, wallId) => {
             isStatic: true
         }
     )
-    Matter.World.add(world, initialWall)
+    Matter.World.add(world, initialMidFloor)
     return {
-        body: initialWall,
+        body: initialMidFloor,
         color,
         pos,
         isVertical,
-        isWall,
         wallId,
-        renderer: <Wall />
+        renderer: <MidFloor />
     }
 }

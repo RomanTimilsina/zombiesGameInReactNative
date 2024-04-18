@@ -3,7 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+    
         android:usesCleartextTraffic="true"
         tools:targetApi="28"
-        tools:ignore="GoogleAppIndexingWarning"/>
+        tools:ignore="GoogleAppIndexingWarning">
+
+  <activity
+    android:name=".MainActivity"
+    android:screenOrientation="landscape"
+   >
+    
+</activity>
+        </application>
+
+        
 </manifest>

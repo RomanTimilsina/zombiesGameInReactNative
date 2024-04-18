@@ -94,9 +94,11 @@ export default (world, pos, size, zombieAtt) => {
     size.height - 20,
     zombieAtt,
     {
-      label: "Zombie"
+      label: "Zombie",
+      isStatic: true
     }
   )
+  initialZombie.isStatic = true
   initialZombie.collisionFilter = {
     'group': -1,
     'category': 2,

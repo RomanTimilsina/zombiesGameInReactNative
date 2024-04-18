@@ -43,8 +43,9 @@ export default (world, color, pos, radius, ids, name = 'notBall') => {
             //    friction: true
         }
     )
+    
     if (name != 'ball') {
-        initialBall.isStatic = true
+        // initialBall.isStatic = true
         initialBall.collisionFilter = {
             'group': -1,
             'category': 2,
