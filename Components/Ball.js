@@ -32,7 +32,7 @@ const Ball = props => {
     )
 }
 
-export default (world, color, pos, radius, ids, name = 'notBall') => {
+export default (world, color, pos, radius, ids, name = 'notBall', notRestitute = false) => {
     const initialBall = Matter.Bodies.circle(
         pos.x,
         pos.y,
@@ -43,6 +43,10 @@ export default (world, color, pos, radius, ids, name = 'notBall') => {
             //    friction: true
         }
     )
+
+    if (notRestitute) {
+        initialBall.restitution = false
+    }
     
     if (name != 'ball') {
         // initialBall.isStatic = true

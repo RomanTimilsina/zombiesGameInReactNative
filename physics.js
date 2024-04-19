@@ -28,8 +28,7 @@ let falling = false
 // }, 0);
 const Physics = (entities, { touches, time, dispatch, events }) => {
     let engine = entities.physics.engine
-    engine.positionIterations = 30
-    engine.velocityIterations = 30 
+    
     Matter.Engine.update(engine, time.delta)
     
 

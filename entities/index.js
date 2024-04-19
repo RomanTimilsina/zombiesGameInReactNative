@@ -17,6 +17,8 @@ function getZombie(world) {
     return { Zombie4: Zombie(world, { x: windowWidth / 2 + 270, y: windowHeight / 2 + 15 }, { width: 75, height: 70 }, '4') }
 }
 
+// export let levels = '1'
+
 function defaultSetup(world) {
     return {
         Wall1: Wall(world, 'red', { x: windowWidth / 2, y: windowHeight }, { width: windowWidth, height: 50 }, false, true, `1`),
@@ -583,9 +585,10 @@ function setLevel(level) {
 
 }
 
-export default restart => {
+export default restart = (level) => {
+    console.log()
     return {
-        ...setLevel('10')
+        ...setLevel(level)
     }
 }
 

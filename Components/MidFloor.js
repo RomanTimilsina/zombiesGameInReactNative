@@ -39,7 +39,7 @@ const MidFloor = props => {
     const color = props.color;
     return (
         <View style={{
-            backgroundColor: color,
+            backgroundColor: 'grey',
             position: 'absolute',
             left: xBody,
             top: yBody,
