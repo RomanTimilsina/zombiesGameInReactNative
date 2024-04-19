@@ -1,8 +1,11 @@
 import Matter from 'matter-js';
 import React, { useEffect, useState } from 'react';
 import { Image, View} from 'react-native';
-export const zombieHit = []
+import { levels } from '../physics';
+
+export var zombieHit = []
 let i = 0
+let prevLevel = ``
 const Zombie = props => {
   const heightBody = props.body.bounds.max.y - props.body.bounds.min.y
   const widthBody = props.body.bounds.max.x - props.body.bounds.min.x
@@ -12,6 +15,14 @@ const Zombie = props => {
   hitZombie = true
   let hitZombie = zombieHit.includes(parseInt(props.body['0']))
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const level = levels
+  // console.log(level)
+  if (prevLevel !== level) {
+    zombieHit = []
+    prevLevel = level
+  }
+
   const idleImageSources = [
     require('../assets/Idle(1).png'),
     require('../assets/Idle(2).png'),
@@ -86,7 +97,7 @@ const Zombie = props => {
     </View>
   )
 }
-export default (world, pos, size, zombieAtt) => {
+export default (world, pos, size, zombieAtt, level) => {
   const initialZombie = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
@@ -104,10 +115,13 @@ export default (world, pos, size, zombieAtt) => {
     'category': 2,
     'mask': 0,
   };
+
   Matter.World.add(world, initialZombie)
+
   return {
     body: initialZombie,
     pos,
+    level,
     renderer: <Zombie />
   }
 }

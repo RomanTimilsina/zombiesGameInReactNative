@@ -6,6 +6,8 @@ const getAngle = (pointerX, pointerY, objectX, objectY) => {
     let angle = Math.atan2((pointerX - objectX), (pointerY - objectY)) * (180 / Math.PI) * -1 + 90;
     return angle
 };
+export let prevLevel = ``
+export let levels = ''
 let bombId = 100
 export var boomHit = false
 let boxIds = 0
@@ -28,6 +30,21 @@ let falling = false
 // }, 0);
 const Physics = (entities, { touches, time, dispatch, events }) => {
     let engine = entities.physics.engine
+    
+    levels = entities.physics.level
+    if (entities.physics.level !== prevLevel ) {
+         ballMove = false
+        //  console.log('level: ',entities.physics.level)
+
+        angle = 0
+        ballPos = { x: 100, y: 320 }
+        opacity = 1
+        count = 1
+        balls = []
+        prevLevel = ``
+//  ballPosArr = []
+        prevLevel = entities.physics.level
+    }
     
     Matter.Engine.update(engine, time.delta)
     
