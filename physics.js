@@ -30,10 +30,10 @@ let falling = false
 // }, 0);
 const Physics = (entities, { touches, time, dispatch, events }) => {
     let engine = entities.physics.engine
-    
+
     levels = entities.physics.level
-    if (entities.physics.level !== prevLevel ) {
-         ballMove = false
+    if (entities.physics.level !== prevLevel) {
+        ballMove = false
         //  console.log('level: ',entities.physics.level)
 
         angle = 0
@@ -42,33 +42,13 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
         count = 1
         balls = []
         prevLevel = ``
-//  ballPosArr = []
+        //  ballPosArr = []
         prevLevel = entities.physics.level
     }
-    
+
     Matter.Engine.update(engine, time.delta)
-    
 
-    //     Matter.Events.on(engine, 'beforeUpdate', function() {
-    //     var gravity = engine.gravity;
-    //     let body = entities.Circle.body
-    //     if (true) {
-    //         Matter.Body.applyForce(body, body.position, {
-    //             x: -gravity.x * gravity.scale * body.mass,
-    //             y: -gravity.y * gravity.scale * body.mass
-    //         });
-    //     }
-    // });
 
-    // if ((Matter.Collision.collides(entities.Bullet.body, entities[`Circle`].body) != null)) {
-    //     falling = true
-    // }
-    
-    if (falling) {
-        entities.Circle.body.force.y = 0.1 / 200;
-        Matter.Body.setSpeed(entities.Circle.body, 1)
-    }
-    
     // entities.Circle.body.force.x = 0.1 / 200;
 
     touches.filter(t => t.type === "move" || t.type === "press")
@@ -87,7 +67,7 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
         });
 
     touches.filter(t => t.type === "end")
-        .forEach(t => {    
+        .forEach(t => {
             console.log("end ")
             Matter.Body.setPosition(entities.Target.body, { x: -40, y: -40 })
             angle = 0
@@ -111,19 +91,19 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
                     //     runOnce = false
                     // }
                     if (!deactivate) {
-                    Matter.Body.setVelocity(entities.Bullet.body, {
-                        x: t.event.pageX - ballPos.x,
-                        y: t.event.pageY - ballPos.y,
-                    })
-                    ballMove = true
-                }
+                        Matter.Body.setVelocity(entities.Bullet.body, {
+                            x: t.event.pageX - ballPos.x,
+                            y: t.event.pageY - ballPos.y,
+                        })
+                        ballMove = true
+                    }
                 }
             }
         })
     if (ballMove) {
         balls.unshift({ x: entities.Bullet.body.position.x, y: entities.Bullet.body.position.y })
         if (!deactivate) {
-        // Matter.Body.setSpeed(entities.Bullet.body, 25)
+            // Matter.Body.setSpeed(entities.Bullet.body, 25)
         }
         if (balls.length > 13) {
             balls.pop()
@@ -132,10 +112,10 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
     for (let i = 1; i <= 4; i++) {
         if ((Matter.Collision.collides(entities.Bullet.body, entities[`Wall${i}`].body) != null)) {
             if (count >= 10) {
-                for ( let j = 1; j < 6; j++) {
+                for (let j = 1; j < 6; j++) {
                     Matter.Body.setSpeed(entities.Bullet.body, 0)
                     Matter.Body.setPosition(entities.Bullet.body, { x: 100, y: 300 })
-                    }
+                }
                 ballMove = false
                 count = 1
             } else {
@@ -162,14 +142,14 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
     }
 
     for (let i = 1; i < 11; i++) {
-            if (ballMove && balls.length > 12) {
-                Matter.Body.setPosition(entities[`Ball${i}`].body, balls[i - 1])
-                Matter.Body.setSpeed(entities[`Ball${i}`].body, 5)
-                // ballMove = !ballMove
-            }
-            if (!ballMove) {
-                Matter.Body.setPosition(entities[`Ball${i}`].body, { x: -30, y: -19 })
-            }
+        if (ballMove && balls.length > 12) {
+            Matter.Body.setPosition(entities[`Ball${i}`].body, balls[i - 1])
+            Matter.Body.setSpeed(entities[`Ball${i}`].body, 5)
+            // ballMove = !ballMove
+        }
+        if (!ballMove) {
+            Matter.Body.setPosition(entities[`Ball${i}`].body, { x: -30, y: -19 })
+        }
     }
 
     // for ( let j = 1; j < 4; j++) {
@@ -180,115 +160,172 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
     Matter.Body.setSpeed(entities[`Bullet`].body, 10)
 
     Object.keys(entities)
-    .filter(key => entities[key].body)
-    .forEach(key =>  {
-        if (key.includes('Circle') ) {
-            if (Matter.Collision.collides(entities.Bullet.body, entities.Circle.body) != null) {
-            falling = true
-        }}
-        // if (falling) {
-        //     Matter.Body.applyForce(entities.Circle.body, {
-        //         x: -1,
-        //         y: 2
-        //     },3)
-        // }
-    })
-
-    for (let i = 1; i <= 4; i++) {
-        
-        
-
-        Object.keys(entities)
-		.filter(key => entities[key].body)
-        .forEach(key =>  {
-            if (key.includes('Zombie') && key.includes(i )) {
-                if (i <= 5) {
-                    console.log(key)
-                }
-                
-                if (zombieCount < i) {
-                    zombieCount++
-                }
-                
-                if (Matter.Collision.collides(entities.Bullet.body, entities[`Zombie${i}`].body) != null) {
-                    if (!zombieHit.includes(i)) {
-                        zombieHit.push(i)
-                        switch (i) {
-                            case 1:
-                                dispatch({ type: '1' })
-                                break
-                            case 2:
-                                dispatch({ type: '2' })
-                                break
-                            case 3:
-                                dispatch({ type: '3' })
-                                break
-                            case 4:
-                                dispatch({ type: '4' })
-                                break
-                        }
-                    }
-                    console.log('zombie:',zombieCount,zombieHit.length)
-                    if (zombieHit.length === zombieCount) {
-                        zombieCount = 0
-                        dispatch({type: '5'})
-                        
-                        // if (zombieCount == 3) {
-                        //     dispatch({type: '6'})
-                        // } else {
-                            
-                        // }
-                      
-                        // zombieHit = []
-                        
-                    }
+        .filter(key => entities[key].body)
+        .forEach(key => {
+            if (key.includes('Circle')) {
+                if (Matter.Collision.collides(entities.Bullet.body, entities.Circle.body) != null) {
+                    falling = true
                 }
             }
-        }
+            // if (falling) {
+            //     Matter.Body.applyForce(entities.Circle.body, {
+            //         x: -1,
+            //         y: 2
+            //     },3)
+            // }
+        })
+
+    for (let i = 1; i <= 4; i++) {
+
+
+
+        Object.keys(entities)
+            .filter(key => entities[key].body)
+            .forEach(key => {
+                if (key.includes('Zombie') && key.includes(i)) {
+                    if (i <= 5) {
+                        console.log(key)
+                    }
+
+                    if (zombieCount < i) {
+                        zombieCount++
+                    }
+
+                    if (Matter.Collision.collides(entities.Bullet.body, entities[`Zombie${i}`].body) != null) {
+                        if (!zombieHit.includes(i)) {
+                            zombieHit.push(i)
+                            switch (i) {
+                                case 1:
+                                    dispatch({ type: '1' })
+                                    break
+                                case 2:
+                                    dispatch({ type: '2' })
+                                    break
+                                case 3:
+                                    dispatch({ type: '3' })
+                                    break
+                                case 4:
+                                    dispatch({ type: '4' })
+                                    break
+                            }
+                        }
+
+
+                        console.log('zombie:', zombieCount, zombieHit.length)
+                        if (zombieHit.length === zombieCount) {
+                            zombieCount = 0
+                            dispatch({ type: '5' })
+
+                            // if (zombieCount == 3) {
+                            //     dispatch({type: '6'})
+                            // } else {
+
+                            // }
+
+                            // zombieHit = []
+
+                        }
+                    }
+
+                    Object.keys(entities)
+                        .filter(key => entities[key].body)
+                        .forEach(key => {
+                            if (key.includes('Circle')) {
+
+                                Matter.Events.on(engine, 'beforeUpdate', function () {
+                                    var gravity = engine.gravity;
+                                    let body = entities.Circle.body
+                                    if (falling) {
+                                        Matter.Body.applyForce(body, body.position, {
+                                            x: -gravity.x * gravity.scale * body.mass,
+                                            y: -gravity.y * gravity.scale * body.mass
+                                        });
+                                    }
+                                });
+
+
+
+                                if (falling) {
+                                    entities.Circle.body.force.y = 0.1 / 200;
+                                    Matter.Body.setSpeed(entities.Circle.body, 1)
+                                }
+
+
+                                if ((Matter.Collision.collides(entities.Bullet.body, entities[`Circle`].body) != null)) {
+                                    falling = true
+                                }
+                                //
+                                if (Matter.Collision.collides(entities.Circle.body, entities[`Zombie${i}`].body) != null) {
+                                    if (!zombieHit.includes(i)) {
+                                        dispatch({ type: "ZombieHit" })
+                                        zombieHit.push(i)
+                                    }
+                                }
+                            }
+                            //
+                        })
+                }
+            }
             )
     }
 
     Object.keys(entities)
-		.filter(key => entities[key].body)
-        .forEach(key =>  {
-            if (key.includes('Bomb') ) {
-    if (Matter.Collision.collides(entities.Bomb.body, entities.Bullet.body) != null) {
-        explosion = 0
-        let body = Matter.Bodies.circle(
-            entities.Bomb.body.position.x,
-            entities.Bomb.body.position.y,
-            200,
-            { frictionAir: 0.021,
-            }
-        );
-        body.collisionFilter = {
-            'group': -1,
-            'category': 2,
-            'mask': 0,
-        };
-        Matter.World.add(engine.world, [body]);
-        bombId++
-        entities[bombId] = {
-            body: body,
-            size: [200, 200],
-            renderer: Box
-        };
-        zombieHit.push(5)
-        zombieHit.push(6)
-    for (let i = 1; i <= 4; i++) {
-        if (entities[bombId].body ) {
-            if (Matter.Collision.collides(entities[bombId].body, entities[`Zombie${i}`].body) != null) {
-                if (!zombieHit.includes(i)) {
-                    dispatch({ type: "ZombieHit" })
-                    zombieHit.push(i)
+        .filter(key => entities[key].body)
+        .forEach(key => {
+            if (key.includes('Bomb')) {
+                if (Matter.Collision.collides(entities.Bomb.body, entities.Bullet.body) != null) {
+                    explosion = 0
+                    let body = Matter.Bodies.circle(
+                        entities.Bomb.body.position.x,
+                        entities.Bomb.body.position.y,
+                        200,
+                        {
+                            frictionAir: 0.021,
+                        }
+                    );
+                    body.collisionFilter = {
+                        'group': -1,
+                        'category': 2,
+                        'mask': 0,
+                    };
+                    Matter.World.add(engine.world, [body]);
+                    bombId++
+                    entities[bombId] = {
+                        body: body,
+                        size: [200, 200],
+                        renderer: Box
+                    };
+                    zombieHit.push(5)
+                    zombieHit.push(6)
+                    for (let i = 1; i <= 4; i++) {
+                        if (entities[bombId].body) {
+                            if (Matter.Collision.collides(entities[bombId].body, entities[`Zombie${i}`].body) != null) {
+                                if (!zombieHit.includes(i)) {
+                                    dispatch({ type: "ZombieHit" })
+                                    zombieHit.push(i)
+                                }
+                            }
+                        }
+                    }
+
+                    // boomHit = true
                 }
             }
-        }
-    }
+        })
 
-        // boomHit = true
-    }
-}})
-return entities;
+    // Object.keys(entities)
+    //     .filter(key => entities[key].body)
+    //     .forEach(key => {
+    //         if (key.includes('Circle')) {
+    //             if (Matter.Collision.collides(entities.Circle.body, entities.Bullet.body) != null) {
+    //                 if (!zombieHit.includes(i)) {
+    //                     dispatch({ type: "ZombieHit" })
+    //                     zombieHit.push(i)
+    //                 }
+    //             }
+    //         }
+    //     })
+
+    return entities;
 }
 export default Physics
