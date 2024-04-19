@@ -35,7 +35,7 @@ function defaultSetup(world) {
         Ball9: Ball(world, 'red', { x: -10, y: -10 }, 5, 6, 'notBall'),
         Ball10: Ball(world, 'red', { x: -10, y: -10 }, 4.5, 6.5, 'notBall'),
         Ball11: Ball(world, 'red', { x: -10, y: -10 }, 4, 7, 'notBall'),
-        
+
         Target: Target(world, 'black', { x: -20, y: -20 }, 20),
         Bg: Bg(world, 'red', { x: windowWidth / 2, y: windowHeight }, { width: windowWidth, height: 50 }, false),
         Commander: Commander(world, { x: 95, y: windowHeight - 90 }, { width: 75, height: 70 }),
@@ -63,7 +63,7 @@ function setLevel(level) {
 
             ...defaultSetup(world),
             MidFloor: MidFloor(world, "black", { x: windowWidth / 2, y: windowHeight / 2 }, { height: 20, width: 150 }, false, false),
-           
+
             Zombie1: Zombie(world, { x: windowWidth / 2 + 25, y: windowHeight / 2 - 55 }, { width: 75, height: 70 }, '1'),
             Zombie2: Zombie(world, { x: windowWidth / 2 + 20, y: windowHeight - 70 }, { width: 75, height: 70 }, '2'),
             Zombie3: Zombie(world, { x: windowWidth / 2 + 200, y: windowHeight - 70 }, { width: 75, height: 70 }, '3'),
@@ -91,11 +91,13 @@ function setLevel(level) {
 
             ...defaultSetup(world),
 
-            MidFloor: MidFloor(world, "black", { x: windowWidth / 2, y: windowHeight / 2 }, { height: 20, width: 150 }, false, false, `0`),
+            MidFloor: MidFloor(world, "black", { x: windowWidth / 2 + 50, y: windowHeight / 2 }, { height: 20, width: 150 }, false, false, `0`),
 
-            Zombie1: Zombie(world, { x: windowWidth / 2, y: windowHeight / 2 - 53 }, { width: 75, height: 70 }, '1'),
-            Zombie2: Zombie(world, { x: windowWidth / 2 + 20, y: windowHeight - 70 }, { width: 75, height: 70 }, '2'),
-            Zombie3: Zombie(world, { x: windowWidth / 2 + 200, y: windowHeight - 70 }, { width: 75, height: 70 }, '3'),
+            Wall5: MidFloor(world, "black", { x: windowWidth / 3, y: windowHeight / 3}, { height: 20, width: 150 }, false, false, `5`),
+
+            Zombie1: Zombie(world, { x: windowWidth / 2 + 70, y: windowHeight / 2 - 55 }, { width: 75, height: 70 }, '1'),
+            Zombie2: Zombie(world, { x: windowWidth / 2 + 200, y: windowHeight - 70 }, { width: 75, height: 70 }, '2'),
+            Zombie3: Zombie(world, { x: windowWidth / 4 + 100, y: windowHeight / 2 - 120 }, { width: 75, height: 70 }, '3'),
         }
     }
 
@@ -154,8 +156,8 @@ function setLevel(level) {
             Wall5: MidFloor(world, "grey", { x: windowWidth - 180, y: windowHeight / 3 }, { height: 20, width: 153 }, true, false, `5`),
             Wall6: MidFloor(world, "grey", { x: windowWidth / 2, y: windowHeight / 3 }, { height: 20, width: 150 }, true, false, `6`),
             Wall7: MidFloor(world, "grey", { x: windowWidth / 1.4, y: windowHeight / 2 + 10 }, { height: 140, width: 20 }, false, `7`),
-            
-            Zombie1: Zombie(world, { x: windowWidth / 2, y: windowHeight / 4 - 23}, { width: 75, height: 70 }, '1'),
+
+            Zombie1: Zombie(world, { x: windowWidth / 2, y: windowHeight / 4 - 23 }, { width: 75, height: 70 }, '1'),
             Zombie2: Zombie(world, { x: windowWidth / 2 + 30, y: windowHeight / 2 + 120 }, { width: 75, height: 70 }, '2', level),
             Zombie3: Zombie(world, { x: windowWidth / 2 + 300, y: windowHeight / 2 + 15 }, { width: 75, height: 70 }, '3', level),
         }
@@ -181,7 +183,7 @@ function setLevel(level) {
 
             ...defaultSetup(world),
             MidFloor: MidFloor(world, "black", { x: windowWidth / 2 + 5, y: windowHeight / 2 }, { height: 20, width: 200 }, false, false, `0`),
-           
+
             Wall5: MidFloor(world, "pink", { x: windowWidth / 2, y: windowHeight / 2 - 39 }, { height: 100, width: 20 }, true, false, `5`),
             Wall6: MidFloor(world, "red", { x: windowWidth / 2 - 85, y: windowHeight / 2 - 39.5 }, { height: 100, width: 20 }, true, false, `6`),
             Wall7: MidFloor(world, "purple", { x: windowWidth / 2 + 5, y: windowHeight / 2 - 93 }, { height: 20, width: 200 }, false, false, `7`),
@@ -214,7 +216,7 @@ function setLevel(level) {
 
             ...defaultSetup(world),
             MidFloor: MidFloor(world, "black", { x: windowWidth / 2 + 5, y: windowHeight / 2 }, { height: 20, width: 200 }, false, false, `0`),
-            
+
             Wall5: MidFloor(world, "red", { x: windowWidth / 2 - 85, y: windowHeight / 2 - 39.5 }, { height: 100, width: 20 }, true, false, `5`),
             Wall6: MidFloor(world, "purple", { x: windowWidth / 2 + 5, y: windowHeight / 2 - 93 }, { height: 20, width: 200 }, false, false, `6`),
             Wall7: MidFloor(world, "yellow", { x: windowWidth / 2 + 95, y: windowHeight / 2 - 27 }, { height: 72, width: 20 }, false, false, `7`),
@@ -243,7 +245,7 @@ function setLevel(level) {
 
             ...defaultSetup(world),
             MidFloor: MidFloor(world, "black", { x: windowWidth / 2 + 5, y: windowHeight / 2 }, { height: 20, width: 200 }, false, false, `0`),
-           
+
             Wall5: MidFloor(world, "red", { x: windowWidth / 2 - 85, y: windowHeight / 2 - 47 }, { height: 112, width: 20 }, true, false, `5`),
             Wall6: MidFloor(world, "purple", { x: windowWidth / 2 - 30, y: windowHeight / 2 - 93 }, { height: 20, width: 130 }, false, false, `6`),
             Wall7: MidFloor(world, "yellow", { x: windowWidth / 2 + 95, y: windowHeight / 2 - 39.5 }, { height: 100, width: 20 }, false, false, `7`),
@@ -273,13 +275,13 @@ function setLevel(level) {
             physics: { engine: engine, world: world, constraint: constraint, level: level },
 
             ...defaultSetup(world),
-            MidFloor: MidFloor(world, "grey", { x: windowWidth / 2 - 10, y: windowHeight / 2 + 70 }, { height: 20, width: 130 }, false, `0`),       
+            MidFloor: MidFloor(world, "grey", { x: windowWidth / 2 - 10, y: windowHeight / 2 + 70 }, { height: 20, width: 130 }, false, `0`),
 
             Wall5: MidFloor(world, "grey", { x: windowWidth / 2 - 65, y: windowHeight / 2 + 120 }, { height: 110, width: 20 }, true, false, `5`),
-            Wall6: MidFloor(world, "grey", { x: windowWidth / 2 + 100, y:  windowHeight / 2 - 20 }, { height: 20, width: 130 }, false, `6`),
+            Wall6: MidFloor(world, "grey", { x: windowWidth / 2 + 100, y: windowHeight / 2 - 20 }, { height: 20, width: 130 }, false, `6`),
             Wall7: MidFloor(world, "grey", { x: windowWidth / 1.3 + 45, y: windowHeight / 2 + 40 }, { height: 20, width: 130 }, true, false, `7`),
 
-            Zombie1: Zombie(world, { x: windowWidth / 1.55 , y: windowHeight / 2 - 75 }, { width: 75, height: 70 }, '1', level),
+            Zombie1: Zombie(world, { x: windowWidth / 1.55, y: windowHeight / 2 - 75 }, { width: 75, height: 70 }, '1', level),
             Zombie2: Zombie(world, { x: windowWidth / 2 + 15, y: windowHeight - 70 }, { width: 75, height: 70 }, '2', level),
             Zombie3: Zombie(world, { x: windowWidth / 2 + 350, y: windowHeight - 70 }, { width: 75, height: 70 }, '3', level),
         }
@@ -302,15 +304,15 @@ function setLevel(level) {
         Matter.World.addConstraint(world, constraint);
         return {
             physics: { engine: engine, world: world, constraint: constraint, level: level },
-            MidFloor: MidFloor(world, "gray", { x: windowWidth / 2.5 , y: windowHeight / 2.3 }, { height: 20, width: 150 }, false, false, `0`),
+            MidFloor: MidFloor(world, "gray", { x: windowWidth / 2.5, y: windowHeight / 2.3 }, { height: 20, width: 150 }, false, false, `0`),
 
             ...defaultSetup(world),
-            Wall5: MidFloor(world, "gray", { x: windowWidth / 1.35, y: windowHeight -70 }, { height: 100, width: 20 }, true, false, `5`),
-            Wall6: MidFloor(world, "gray", { x:  windowWidth / 1.37 , y:windowHeight / 2.3 }, { height: 20, width: 150 }, false, false, `6`),
-            Wall7: MidFloor(world, "gray", { x: windowWidth / 1.8, y: windowHeight -70 }, { height: 100, width: 20 }, true, false, `7`),
+            Wall5: MidFloor(world, "gray", { x: windowWidth / 1.35, y: windowHeight - 70 }, { height: 100, width: 20 }, true, false, `5`),
+            Wall6: MidFloor(world, "gray", { x: windowWidth / 1.37, y: windowHeight / 2.3 }, { height: 20, width: 150 }, false, false, `6`),
+            Wall7: MidFloor(world, "gray", { x: windowWidth / 1.8, y: windowHeight - 70 }, { height: 100, width: 20 }, true, false, `7`),
 
             Zombie1: Zombie(world, { x: windowWidth / 2 - 55, y: windowHeight / 2 - 80 }, { width: 75, height: 70 }, '1', level),
-            Zombie2: Zombie(world, { x: windowWidth / 2 + 230, y: windowHeight / 2 - 80}, { width: 75, height: 70 }, '2', level),
+            Zombie2: Zombie(world, { x: windowWidth / 2 + 230, y: windowHeight / 2 - 80 }, { width: 75, height: 70 }, '2', level),
             Zombie3: Zombie(world, { x: windowWidth / 2 + 150, y: windowHeight - 70 }, { width: 75, height: 70 }, '3', level),
             Zombie4: Zombie(world, { x: windowWidth / 2 + 300, y: windowHeight - 70 }, { width: 75, height: 70 }, '3', level),
         }
@@ -319,7 +321,7 @@ function setLevel(level) {
     if (level === `10`) {
         let engine = Matter.Engine.create({ enableSleeping: false })
         engine.positionIterations = 100
-    engine.velocityIterations = 100
+        engine.velocityIterations = 100
         engine.gravity.y = 0
         let world = engine.world
 
@@ -338,8 +340,8 @@ function setLevel(level) {
 
             ...defaultSetup(world),
             MidFloor: MidFloor(world, "gray", { x: windowWidth / 2 - 50, y: windowHeight / 2 + 108 }, { height: 120, width: 20 }, true, false, `6`),
-    
-            Wall5: MidFloor(world, "gray", { x: windowWidth / 2 + 95, y: windowHeight / 2 + 48  }, { height: 240, width: 20 }, false, false, `5`),
+
+            Wall5: MidFloor(world, "gray", { x: windowWidth / 2 + 95, y: windowHeight / 2 + 48 }, { height: 240, width: 20 }, false, false, `5`),
 
             Zombie1: Zombie(world, { x: windowWidth / 2 + 310, y: windowHeight - 70 }, { width: 75, height: 70 }, '1', level),
             Zombie2: Zombie(world, { x: windowWidth / 2 + 35, y: windowHeight - 70 }, { width: 75, height: 70 }, '2', level),
@@ -352,14 +354,7 @@ function setLevel(level) {
 }
 
 export default restart = (level) => {
-    console.log()
     return {
         ...setLevel(level)
     }
 }
-
-
-
-
-
-
