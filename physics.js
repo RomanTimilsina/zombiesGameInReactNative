@@ -23,6 +23,7 @@ let balls = []
 let deactivate = false
 let zombieCount = 0
 let falling = false
+let pressTimer;
 // let now = Date.now();
 // setInterval(() => {
 //     Matter.Engine.update(engine, Date.now() - now);
@@ -46,32 +47,45 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
         prevLevel = entities.physics.level
     }
 
-    Matter.Engine.update(engine, time.delta)
+
 
 
     // entities.Circle.body.force.x = 0.1 / 200;
 
-    touches.filter(t => t.type === "move" || t.type === "press")
+    touches.filter(t => t.type === "move")
         .forEach(t => {
-            console.log(" moved and release")
+            console.log(" moved ")
             let x = t.event.pageX
             let y = t.event.pageY
             Matter.Body.setPosition(entities.Target.body, { x: x, y: y })
-            // angle = getAngle(t.event.pageX, t.event.pageXY, 95 + 75 / 2, 310 + 35)
+            angle = getAngle(t.event.pageX, t.event.pageXY, 95 + 75 / 2, 310 + 35)
         });
 
-    touches.filter(t => t.type === "move")
+    touches.filter(t => t.type === "press")
         .forEach(t => {
-            console.log("move ")
-            angle = getAngle(t.event.pageX, t.event.pageY, 95 + 75 / 2, 310 + 35)
+            // pressTimer = setTimeout(() => {
+                console.log("release")
+                let x = t.event.pageX
+                let y = t.event.pageY
+                Matter.Body.setPosition(entities.Target.body, { x: x, y: y });
+                // angle = getAngle(t.event.pageX, t.event.pageXY, 95 + 75 / 2, 310 + 35)
+            // }, 1000);
+            
         });
+
+
+    // touches.filter(t => t.type === "move")
+    //     .forEach(t => {
+    //         console.log("move ")
+    //         angle = getAngle(t.event.pageX, t.event.pageY, 95 + 75 / 2, 310 + 35)
+    //     });
 
     touches.filter(t => t.type === "end")
         .forEach(t => {
             console.log("end ")
             Matter.Body.setPosition(entities.Target.body, { x: -40, y: -40 })
             angle = 0
-            console.log(bulletCount)
+            // console.log(bulletCount)
             if (bulletCount > 4) {
                 deactivate = true
                 bulletCount = 1
@@ -109,20 +123,27 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
             balls.pop()
         }
     }
-    for (let i = 1; i <= 4; i++) {
-        if ((Matter.Collision.collides(entities.Bullet.body, entities[`Wall${i}`].body) != null)) {
-            if (count >= 10) {
-                for (let j = 1; j < 6; j++) {
-                    Matter.Body.setSpeed(entities.Bullet.body, 0)
-                    Matter.Body.setPosition(entities.Bullet.body, { x: 100, y: 300 })
+    for (let i = 1; i <= 10; i++) {
+        Object.keys(entities)
+            .filter(key => entities[key].body)
+            .forEach(key => {
+                if (key.includes(`Wall${i}`)) {
+                    if ((Matter.Collision.collides(entities.Bullet.body, entities[`Wall${i}`].body) != null)) {
+                        if (count >= 10) {
+                            for (let j = 1; j < 6; j++) {
+                                Matter.Body.setSpeed(entities.Bullet.body, 0)
+                                Matter.Body.setPosition(entities.Bullet.body, { x: 100, y: 300 })
+                            }
+                            ballMove = false
+                            count = 1
+                        } else {
+                            count++
+                            // console.log(count)
+                        }
+                    }
+                    //
                 }
-                ballMove = false
-                count = 1
-            } else {
-                count++
-                // console.log(count)
-            }
-        }
+            })
     }
     if (count > 10) {
         count = 1
@@ -141,16 +162,16 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
         }
     }
 
-    for (let i = 1; i < 11; i++) {
-        if (ballMove && balls.length > 12) {
-            Matter.Body.setPosition(entities[`Ball${i}`].body, balls[i - 1])
-            Matter.Body.setSpeed(entities[`Ball${i}`].body, 5)
-            // ballMove = !ballMove
-        }
-        if (!ballMove) {
-            Matter.Body.setPosition(entities[`Ball${i}`].body, { x: -30, y: -19 })
-        }
-    }
+    // for (let i = 1; i < 11; i++) {
+    //     if (ballMove && balls.length > 12) {
+    //         Matter.Body.setPosition(entities[`Ball${i}`].body, balls[i - 1])
+    //         Matter.Body.setSpeed(entities[`Ball${i}`].body, 5)
+    //         // ballMove = !ballMove
+    //     }
+    //     if (!ballMove) {
+    //         Matter.Body.setPosition(entities[`Ball${i}`].body, { x: -30, y: -49 })
+    //     }
+    // }
 
     // for ( let j = 1; j < 4; j++) {
     //         // Matter.Body.setSpeed(entities.Bullet.body, 10)
@@ -184,7 +205,7 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
             .forEach(key => {
                 if (key.includes('Zombie') && key.includes(i)) {
                     if (i <= 5) {
-                        console.log(key)
+                        // console.log(key)
                     }
 
                     if (zombieCount < i) {
@@ -246,10 +267,9 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
 
 
                                 if (falling) {
-                                    entities.Circle.body.force.y = 0.1 / 200;
-                                    Matter.Body.setSpeed(entities.Circle.body, 1)
+                                    entities.Circle.body.force.y = 0.3 / 200;
+                                    Matter.Body.setSpeed(entities.Circle.body, 3)
                                 }
-
 
                                 if ((Matter.Collision.collides(entities.Bullet.body, entities[`Circle`].body) != null)) {
                                     falling = true
@@ -325,6 +345,16 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
     //             }
     //         }
     //     })
+    Matter.Engine.update(engine, time.delta)
+
+    // Matter.Runner.run(engine)
+
+    // var runner = Matter.Runner.create({
+    //     delta: 1000, // 600Hz delta = 1.666ms = 10upf @ 60fps (10x default precision)
+    //     maxFrameTime: 1 // performance budget
+    // });
+
+    // Matter.Runner.run(runner, engine);
 
     return entities;
 }

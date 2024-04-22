@@ -42,7 +42,7 @@ function App() {
   const [show, setShow] = useState(false)
 
   const changeLevel = (level) => {
-    console.log(level)
+    // console.log(level)
     setShow(true)
     setEntity(entities(level))
     // zombieHit = []

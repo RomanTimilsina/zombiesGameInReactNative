@@ -21,7 +21,7 @@ const Commander = props => {
             position: 'absolute',
             height: heightBody,
             width: widthBody, 
-            // opacity: 0
+            opacity: 0
         }}>
             <Image
                 style={{ width: 100, height: 90, left: 0, top: 0, transform: [{ rotateZ: `${angle}deg` }] }}
