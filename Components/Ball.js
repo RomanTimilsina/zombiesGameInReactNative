@@ -9,6 +9,8 @@ const Ball = props => {
     const xBody = props.body.position.x - widthBody / 2
     const yBody = props.body.position.y - heightBody / 2
     ballPosArr.unshift(ballPos)
+
+    const name = props.name
     // if (props.name == 'ball') {
     //     ballPos.x = props.body.position.x
     //     ballPos.y = props.body.position.y
@@ -18,7 +20,7 @@ const Ball = props => {
     const radius = props.radius;
     return (
         <View style={{
-            backgroundColor: color,
+            backgroundColor: name === 'ball1' ? 'yellow' : color,
             position: 'absolute',
             left: xBody,
             top: yBody,
@@ -26,7 +28,7 @@ const Ball = props => {
             height: radius * 2,
             borderWidth: 1,
             borderRadius: radius,
-            opacity: 1 ,
+            opacity: name === 'ball' ? 0 : name === 'ball1' ? 1 : 0 ,
             overflow: 'hidden'
         }} />
     )
@@ -48,7 +50,7 @@ export default (world, color, pos, radius, ids, name = 'notBall', notRestitute =
         initialBall.restitution = false
     }
     
-    if (name != 'ball') {
+    if (name == 'notBall') {
         // initialBall.isStatic = true
         initialBall.collisionFilter = {
             'group': -1,
@@ -56,6 +58,16 @@ export default (world, color, pos, radius, ids, name = 'notBall', notRestitute =
             'mask': 0,
         };
     }
+
+    // if (name != 'barrel') {
+    //     // initialBall.isStatic = true
+    //     initialBall.collisionFilter = {
+    //         'group': -1,
+    //         'category': 2,
+    //         'mask': 0,
+    //     };
+    // }
+
     Matter.World.add(world, initialBall)
     return {
         body: initialBall,

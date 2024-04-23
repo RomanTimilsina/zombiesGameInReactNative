@@ -23,18 +23,19 @@ function defaultSetup(world) {
         WallEnforcer3: Wall(world, 'yellow', { x: windowWidth / 2, y: -250 }, { width: windowWidth, height: 500 }, false, true, `3`),
         WallEnforcer4: Wall(world, 'yellow', { x: windowWidth + 250, y: windowHeight / 2 }, { width: 500, height: windowHeight }, true, true, `4`),
 
-        Bullet: Ball(world, 'yellow', { x: windowWidth / 10, y: windowHeight - 60 }, 10, 1, 'ball'),
-        // Ball1: Ball(world, 'red', { x: -10, y: -10 }, 9, 2, 'notBall'),
-        // Ball2: Ball(world, 'red', { x: -10, y: -10 }, 8.5, 2.5, 'notBall'),
-        // Ball3: Ball(world, 'red', { x: -10, y: -10 }, 8, 3, 'notBall'),
-        // Ball4: Ball(world, 'red', { x: -10, y: -10 }, 7.5, 3.5, 'notBall'),
-        // Ball5: Ball(world, 'red', { x: -10, y: -10 }, 7, 4, 'notBall'),
-        // Ball6: Ball(world, 'red', { x: -10, y: -10 }, 6.5, 4.5, 'notBall'),
-        // Ball7: Ball(world, 'red', { x: -10, y: -10 }, 6, 5, 'notBall'),
-        // Ball8: Ball(world, 'red', { x: -10, y: -10 }, 5.5, 5.5, 'notBall'),
-        // Ball9: Ball(world, 'red', { x: -10, y: -10 }, 5, 6, 'notBall'),
-        // Ball10: Ball(world, 'red', { x: -10, y: -10 }, 4.5, 6.5, 'notBall'),
-        // Ball11: Ball(world, 'red', { x: -10, y: -10 }, 4, 7, 'notBall'),
+        OuterBall: Ball(world, 'pink', { x: -10, y: -10 }, 40, 100, 'notBall'),
+        Bullet: Ball(world, 'yellow', { x: windowWidth / 10, y: windowHeight - 60 }, 20, 1, 'ball'),
+        Ball1: Ball(world, 'red', { x: -10, y: -10 }, 9, 2, 'ball1'),
+        Ball2: Ball(world, 'red', { x: -10, y: -10 }, 8.5, 2.5, 'notBall'),
+        Ball3: Ball(world, 'red', { x: -10, y: -10 }, 8, 3, 'notBall'),
+        Ball4: Ball(world, 'red', { x: -10, y: -10 }, 7.5, 3.5, 'notBall'),
+        Ball5: Ball(world, 'red', { x: -10, y: -10 }, 7, 4, 'notBall'),
+        Ball6: Ball(world, 'red', { x: -10, y: -10 }, 6.5, 4.5, 'notBall'),
+        Ball7: Ball(world, 'red', { x: -10, y: -10 }, 6, 5, 'notBall'),
+        Ball8: Ball(world, 'red', { x: -10, y: -10 }, 5.5, 5.5, 'notBall'),
+        Ball9: Ball(world, 'red', { x: -10, y: -10 }, 5, 6, 'notBall'),
+        Ball10: Ball(world, 'red', { x: -10, y: -10 }, 4.5, 6.5, 'notBall'),
+        Ball11: Ball(world, 'red', { x: -10, y: -10 }, 4, 7, 'notBall'),
 
         Target: Target(world, 'black', { x: -20, y: -20 }, 20),
         Bg: Bg(world, 'red', { x: windowWidth / 2, y: windowHeight }, { width: windowWidth, height: 50 }, false),
@@ -347,7 +348,7 @@ function setLevel(level) {
             Zombie2: Zombie(world, { x: windowWidth / 2 + 35, y: windowHeight - 70 }, { width: 75, height: 70 }, '2', level),
             Zombie3: Zombie(world, { x: windowWidth / 2 + 200, y: windowHeight - 70 }, { width: 75, height: 70 }, '3', level),
 
-            Circle: Ball(world, 'yellow', { x: windowWidth / 2 + 95, y: windowHeight / 2 - 39.5 - 45 }, 20, 1, 'ball'),
+            Circle: Ball(world, 'yellow', { x: windowWidth / 2 + 95, y: windowHeight / 2 - 39.5 - 45 }, 20, 1, 'barrel'),
         }
     }
 

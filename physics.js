@@ -86,7 +86,7 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
             Matter.Body.setPosition(entities.Target.body, { x: -40, y: -40 })
             angle = 0
             // console.log(bulletCount)
-            if (bulletCount > 4) {
+            if (bulletCount > 40) {
                 deactivate = true
                 bulletCount = 1
             } else {
@@ -123,6 +123,7 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
             balls.pop()
         }
     }
+
     for (let i = 1; i <= 10; i++) {
         Object.keys(entities)
             .filter(key => entities[key].body)
@@ -136,17 +137,25 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
                             }
                             ballMove = false
                             count = 1
+                            balls = []
                         } else {
                             count++
                             // console.log(count)
                         }
                     }
                     //
+
+                    // if ((Matter.Collision.collides(entities.OuterBall.body, entities[`Wall${i}`].body) != null)) {
+                    //     Matter.Body.setSpeed(entities[`Bullet`].body, 5)
+                    // } else {
+                       
+                    // }
                 }
             })
     }
     if (count > 10) {
         count = 1
+        balls = []
     }
     if (Matter.Collision.collides(entities.Bullet.body, entities.MidFloor.body) != null) {
         if (count == 10) {
@@ -162,23 +171,29 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
         }
     }
 
-    // for (let i = 1; i < 11; i++) {
-    //     if (ballMove && balls.length > 12) {
-    //         Matter.Body.setPosition(entities[`Ball${i}`].body, balls[i - 1])
-    //         Matter.Body.setSpeed(entities[`Ball${i}`].body, 5)
-    //         // ballMove = !ballMove
-    //     }
-    //     if (!ballMove) {
-    //         Matter.Body.setPosition(entities[`Ball${i}`].body, { x: -30, y: -49 })
-    //     }
-    // }
-
-    // for ( let j = 1; j < 4; j++) {
-    //         // Matter.Body.setSpeed(entities.Bullet.body, 10)
-    //         // Matter.Body.setPosition(entities[`Bullet${bulletCount}`].body, { x: 100, y: 300 })
-    // }
-
     Matter.Body.setSpeed(entities[`Bullet`].body, 10)
+    // Matter.Body.setPosition(entities[`Ball1`].body, entities[`Bullet`].body.position)
+
+    for (let i = 1; i < 11; i++) {
+        if (ballMove && balls[i - 1] != null) {
+            // if (i === 1) {
+            //     Matter.Body.setPosition(entities[`Ball${i}`].body, balls[i - 1])
+            // }
+            Matter.Body.setPosition(entities[`Ball${i}`].body, balls[i - 1])
+            Matter.Body.setSpeed(entities[`Ball${i}`].body, 5)
+            // ballMove = !ballMove
+        }
+        if (!ballMove) {
+            Matter.Body.setPosition(entities[`Ball${i}`].body, { x: -30, y: -49 })
+        }
+    }
+
+    for ( let j = 1; j < 4; j++) {
+            // Matter.Body.setSpeed(entities.Bullet.body, 10)
+            // Matter.Body.setPosition(entities[`Bullet${bulletCount}`].body, { x: 100, y: 300 })
+    }
+
+    
 
     Object.keys(entities)
         .filter(key => entities[key].body)
@@ -197,9 +212,6 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
         })
 
     for (let i = 1; i <= 4; i++) {
-
-
-
         Object.keys(entities)
             .filter(key => entities[key].body)
             .forEach(key => {
@@ -212,7 +224,7 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
                         zombieCount++
                     }
 
-                    if (Matter.Collision.collides(entities.Bullet.body, entities[`Zombie${i}`].body) != null) {
+                    if (Matter.Collision.collides(entities.Ball2.body, entities[`Zombie${i}`].body) != null) {
                         if (!zombieHit.includes(i)) {
                             zombieHit.push(i)
                             switch (i) {
@@ -269,6 +281,7 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
                                 if (falling) {
                                     entities.Circle.body.force.y = 0.3 / 200;
                                     Matter.Body.setSpeed(entities.Circle.body, 3)
+                                
                                 }
 
                                 if ((Matter.Collision.collides(entities.Bullet.body, entities[`Circle`].body) != null)) {
@@ -355,6 +368,10 @@ const Physics = (entities, { touches, time, dispatch, events }) => {
     // });
 
     // Matter.Runner.run(runner, engine);
+
+    
+
+    // Matter.Body.setPosition(entities[`OuterBall`].body, entities.Bullet.body.position)
 
     return entities;
 }
